@@ -19,13 +19,20 @@ package helloworld
 
 import (
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"net/http"
+	"os"
 )
+
+func init() {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetOutput(os.Stdout)
+	log.SetLevel(log.DebugLevel)
+}
 
 // HelloLogging logs messages.
 func HelloLogging(w http.ResponseWriter, r *http.Request) {
-	log.Println("This is stderr")
+	log.WithField("function_name", "HelloLogging").Info("received a new request in HelloLogging")
 	fmt.Println("This is stdout")
 }
 
